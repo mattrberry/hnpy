@@ -1,2 +1,2 @@
 # hnpy
-A simple, barebones wrapper for the Hacker News API
+a simple, barebones wrapper for the hacker news api
