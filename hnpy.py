@@ -27,29 +27,29 @@ def makeItem(itemid):
 
 class HackerNews(object):
     def getTop(self):
-        self.top500 = requests.get(baseURL + "topstories.json").json()
+        self.top = requests.get(baseURL + "topstories.json").json()
 
     def getNew(self):
-        self.new500 = requests.get(baseURL + "newstories.json").json()
+        self.new = requests.get(baseURL + "newstories.json").json()
 
     def getBest(self):
-        self.best500 = requests.get(baseURL + "beststories.json").json()
+        self.best = requests.get(baseURL + "beststories.json").json()
 
     def getAskStories(self):
-        self.ask200 = requests.get(baseURL + "askstories.json").json()
+        self.ask = requests.get(baseURL + "askstories.json").json()
 
     def getShowStories(self):
-        self.show200 = requests.get(baseURL + "showstories.json").json()
+        self.show = requests.get(baseURL + "showstories.json").json()
 
     def getJobStories(self):
-        self.job200 = requests.get(baseURL + "jobstories.json").json()
+        self.job = requests.get(baseURL + "jobstories.json").json()
 
-    def load30(self, ids, start=0):
+    def load(self, ids, amount, start=0):
         self.loaded = []
-        maxRange = int(min(30, (abs(len(ids) - start) + (len(ids) - start)) / 2))
-        for num in ids[start:start + maxRange]:
-            item = makeItem(str(num))
-            self.loaded.append(item)
+        for index in range(start, start + amount):
+            if index < len(ids):
+                item = makeItem(str(ids[index]))
+                self.loaded.append(item)
 
 
 class Item(object):
