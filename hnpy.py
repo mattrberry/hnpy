@@ -55,7 +55,7 @@ class HackerNews(object):
 class Item(object):
     def __init__(self, itemjson):
         self.id = str(itemjson["id"])
-        self.user = itemjson["by"]
+        self.by = itemjson["by"]
         self.time = itemjson["time"]
 
     def age(self):
@@ -90,6 +90,10 @@ class Story(Item):
         for kid in self.kids:
             item = makeItem(str(kid))
             self.loadedkids.append(item)
+
+    def infoString(self):
+        return "{} points by {} {} ago | {} comments".format(
+                self.score, self.by, self.ageString(), self.descendants)
 
 
 class Comment(Item):
@@ -126,6 +130,10 @@ class Ask(Item):
             item = makeItem(str(kid))
             self.loadedkids.append(item)
 
+    def intoString(self):
+        return "{} points by {} {} ago | {} comments".format(
+                self.score, self.by, self.ageString(), self.descendants)
+
 
 class Job(Item):
     def __init__(self, itemjson):
@@ -139,6 +147,9 @@ class Job(Item):
             self.url = itemjson["url"]
         else:
             self.url = ""
+
+    def infoString(self):
+        return "{} ago".format(this.ageString())
 
 
 class Poll(Item):
@@ -159,6 +170,10 @@ class Poll(Item):
         for kid in self.kids:
             item = makeItem(str(kid))
             self.loadedkids.append(item)
+
+    def infoString(self):
+        return "{} points by {} {} ago | {} comments".format(
+                self.score, self.by, self.ageString(), self.descendants)
 
 
 class PollOption(Item):
