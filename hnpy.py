@@ -130,7 +130,7 @@ class Ask(Item):
             item = makeItem(str(kid))
             self.loadedkids.append(item)
 
-    def intoString(self):
+    def infoString(self):
         return "{} points by {} {} ago | {} comments".format(
                 self.score, self.by, self.ageString(), self.descendants)
 
