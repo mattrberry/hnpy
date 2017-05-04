@@ -135,7 +135,10 @@ class Job(Item):
             self.text = itemjson["text"]
         else:
             self.text = ""
-        self.url = itemjson["url"]
+        if "url" in itemjson:
+            self.url = itemjson["url"]
+        else:
+            self.url = ""
 
 
 class Poll(Item):
