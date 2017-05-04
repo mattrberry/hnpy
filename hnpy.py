@@ -149,7 +149,7 @@ class Job(Item):
             self.url = ""
 
     def infoString(self):
-        return "{} ago".format(this.ageString())
+        return "{} ago".format(self.ageString())
 
 
 class Poll(Item):
