@@ -27,29 +27,30 @@ def makeItem(itemid):
 
 class HackerNews(object):
     def getTop(self):
-        self.top = requests.get(baseURL + "topstories.json").json()
+        return requests.get(baseURL + "topstories.json").json()
 
     def getNew(self):
-        self.new = requests.get(baseURL + "newstories.json").json()
+        return requests.get(baseURL + "newstories.json").json()
 
     def getBest(self):
-        self.best = requests.get(baseURL + "beststories.json").json()
+        return requests.get(baseURL + "beststories.json").json()
 
     def getAskStories(self):
-        self.ask = requests.get(baseURL + "askstories.json").json()
+        return requests.get(baseURL + "askstories.json").json()
 
     def getShowStories(self):
-        self.show = requests.get(baseURL + "showstories.json").json()
+        return requests.get(baseURL + "showstories.json").json()
 
     def getJobStories(self):
-        self.job = requests.get(baseURL + "jobstories.json").json()
+        return requests.get(baseURL + "jobstories.json").json()
 
     def load(self, ids, amount, start=0):
-        self.loaded = []
+        loaded = []
         for index in range(start, start + amount):
             if index < len(ids):
                 item = makeItem(str(ids[index]))
-                self.loaded.append(item)
+                loaded.append(item)
+        return loaded
 
 
 class Item(object):
@@ -66,11 +67,11 @@ class Item(object):
         if age / (60 * 60 * 24) >= 1:
             return str(int(age / (60 * 60 * 24))) + " days"
         elif age / (60 * 60) >= 1:
-            return str(int(age / (60 * 60))) + " hrs"
+            return str(int(age / (60 * 60))) + " hours"
         elif age / 60 >= 1:
-            return str(int(age / 60)) + " mins"
+            return str(int(age / 60)) + " minutes"
         else:
-            return str(age) + " secs"
+            return str(age) + " seconds"
 
 
 class Story(Item):
@@ -86,10 +87,11 @@ class Story(Item):
         self.score = itemjson["score"]
 
     def loadKids(self):
-        self.loadedkids = []
-        for kid in self.kids:
+        loaded = []
+        for kids in self.kids:
             item = makeItem(str(kid))
-            self.loadedkids.append(item)
+            loaded.append(item)
+        return loaded
 
     def infoString(self):
         return "{} points by {} {} ago | {} comments".format(
@@ -106,10 +108,11 @@ class Comment(Item):
             self.kids = []
 
     def loadKids(self):
-        self.loadedkids = []
-        for kid in self.kids:
+        loaded = []
+        for kids in self.kids:
             item = makeItem(str(kid))
-            self.loadedkids.append(item)
+            loaded.append(item)
+        return loaded
 
 
 class Ask(Item):
@@ -125,10 +128,11 @@ class Ask(Item):
         self.score = itemjson["score"]
 
     def loadKids(self):
-        self.loadedkids = []
-        for kid in self.kids:
+        loaded = []
+        for kids in self.kids:
             item = makeItem(str(kid))
-            self.loadedkids.append(item)
+            loaded.append(item)
+        return loaded
 
     def infoString(self):
         return "{} points by {} {} ago | {} comments".format(
@@ -166,10 +170,11 @@ class Poll(Item):
         self.score = itemjson["score"]
 
     def loadKids(self):
-        self.loadedkids = []
-        for kid in self.kids:
+        loaded = []
+        for kids in self.kids:
             item = makeItem(str(kid))
-            self.loadedkids.append(item)
+            loaded.append(item)
+        return loaded
 
     def infoString(self):
         return "{} points by {} {} ago | {} comments".format(
