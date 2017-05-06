@@ -10,10 +10,10 @@ def makeItem(itemid):
     itemtype = itemjson["type"]
     if "story" in itemtype:
         # Items of type "ask" say they are of type "story"
-        if "text" not in itemjson:
-            item = Story(itemjson)
-        else:
+        if "url" not in itemjson or itemjson["url"] == "":
             item = Ask(itemjson)
+        else:
+            item = Story(itemjson)
     elif "comment" in itemtype:
         item = Comment(itemjson)
     elif "job" in itemtype:
@@ -122,7 +122,10 @@ class Ask(Item):
     def __init__(self, itemjson):
         Item.__init__(self, itemjson)
         self.title = itemjson["title"]
-        self.text = itemjson["text"]
+        if "text" in itemjson:
+            self.text = itemjson["text"]
+        else:
+            self.text = ""
         self.descendants = itemjson["descendants"]
         if "kids" in itemjson:
             self.kids = itemjson["kids"]
