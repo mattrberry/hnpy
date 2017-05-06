@@ -35,13 +35,13 @@ class HackerNews(object):
     def getBest(self):
         return requests.get(baseURL + "beststories.json").json()
 
-    def getAskStories(self):
+    def getAsk(self):
         return requests.get(baseURL + "askstories.json").json()
 
-    def getShowStories(self):
+    def getShow(self):
         return requests.get(baseURL + "showstories.json").json()
 
-    def getJobStories(self):
+    def getJob(self):
         return requests.get(baseURL + "jobstories.json").json()
 
     # parameters: [required] list of ids as returned by the above get[...] methods
