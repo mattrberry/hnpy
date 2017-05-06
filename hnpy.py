@@ -44,6 +44,9 @@ class HackerNews(object):
     def getJobStories(self):
         return requests.get(baseURL + "jobstories.json").json()
 
+    # parameters: [required] list of ids as returned by the above get[...] methods
+    #             [required] amount to load (will return less if less exist
+    #             [optional] starting point (default is 0)
     def load(self, ids, amount, start=0):
         loaded = []
         for index in range(start, start + amount):
