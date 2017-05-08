@@ -61,6 +61,14 @@ class Item(object):
         self.id = str(itemjson["id"])
         self.by = itemjson["by"]
         self.time = itemjson["time"]
+        if "score" in itemjson:
+            self.score = itemjson["score"]
+        else:
+            self.score = 1
+        if "descendants" in itemjson:
+            self.descendants = itemjson["descendants"]
+        else:
+            self.descendants = 0
 
     def age(self):
         return int(time.time()) - self.time
@@ -82,12 +90,10 @@ class Story(Item):
         Item.__init__(self, itemjson)
         self.title = itemjson["title"]
         self.url = itemjson["url"]
-        self.descendants = itemjson["descendants"]
         if "kids" in itemjson:
             self.kids = itemjson["kids"]
         else:
             self.kids = []
-        self.score = itemjson["score"]
 
     def loadKids(self):
         loaded = []
@@ -95,10 +101,6 @@ class Story(Item):
             item = makeItem(str(kid))
             loaded.append(item)
         return loaded
-
-    def infoString(self):
-        return "{} points by {} {} ago | {} comments".format(
-                self.score, self.by, self.ageString(), self.descendants)
 
 
 class Comment(Item):
@@ -126,12 +128,10 @@ class Ask(Item):
             self.text = itemjson["text"]
         else:
             self.text = ""
-        self.descendants = itemjson["descendants"]
         if "kids" in itemjson:
             self.kids = itemjson["kids"]
         else:
             self.kids = []
-        self.score = itemjson["score"]
 
     def loadKids(self):
         loaded = []
@@ -139,10 +139,6 @@ class Ask(Item):
             item = makeItem(str(kid))
             loaded.append(item)
         return loaded
-
-    def infoString(self):
-        return "{} points by {} {} ago | {} comments".format(
-                self.score, self.by, self.ageString(), self.descendants)
 
 
 class Job(Item):
@@ -158,22 +154,17 @@ class Job(Item):
         else:
             self.url = ""
 
-    def infoString(self):
-        return "{} ago".format(self.ageString())
-
 
 class Poll(Item):
     def __init__(self, itemjson):
         Item.__init__(self, itemjson)
         self.title = itemjson["title"]
         self.text = itemjson["text"]
-        self.descendants = itemjson["descendants"]
         if "kids" in itemjson:
             self.kids = itemjson["kids"]
         else:
             self.kids = []
         self.parts = itemjson["parts"]
-        self.score = itemjson["score"]
 
     def loadKids(self):
         loaded = []
@@ -182,13 +173,8 @@ class Poll(Item):
             loaded.append(item)
         return loaded
 
-    def infoString(self):
-        return "{} points by {} {} ago | {} comments".format(
-                self.score, self.by, self.ageString(), self.descendants)
-
 
 class PollOption(Item):
     def __init__(self, itemjson):
         Item.__init__(self, itemjson)
         self.text = itemjson["text"]
-        self.score = itemjson["score"]
